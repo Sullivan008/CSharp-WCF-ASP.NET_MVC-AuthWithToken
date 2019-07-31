@@ -1,0 +1,12 @@
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\obj\Debug\AuthWithTokenServer.csproj.CoreCompileInputs.cache
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\AuthWithTokenServer.dll.config
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\AuthWithTokenServer.dll
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\AuthWithTokenServer.pdb
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\EntityFramework.dll
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\EntityFramework.SqlServer.dll
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\EntityFramework.xml
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\bin\EntityFramework.SqlServer.xml
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\obj\Debug\AuthWithTokenServer.csproj.CopyComplete
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\obj\Debug\AuthWithTokenServer.dll
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\obj\Debug\AuthWithTokenServer.pdb
+C:\Users\kozakp\source\repos\AuthWithToken\AuthWithTokenServer\obj\Debug\AuthWithTokenServer.csprojAssemblyReference.cache
