@@ -1,10 +1,10 @@
-﻿using AuthWithTokenServer.Classes.BasicAuthFunctions;
-using AuthWithTokenServer.Classes.Token;
-using AuthWithTokenServer.Classes.Validator;
-using AuthWithTokenServer.Interfaces.Validator;
-using AuthWithTokenServer.Models;
-using AuthWithTokenServer.Models.DBModel;
-using AuthWithTokenServer.Models.Errors;
+﻿using AuthWithTokenServer.Core.TokenBuilder;
+using AuthWithTokenServer.Core.Validator.UserCredentialsValidator;
+using AuthWithTokenServer.Dtos.Core.Error;
+using AuthWithTokenServer.Dtos.Core.TokenBuilder;
+using AuthWithTokenServer.Dtos.Core.Validator;
+using AuthWithTokenServer.Dtos.Service.AuthenticationTokenService.Authentication;
+using AuthWithTokenServer.Infrastructure;
 using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -17,41 +17,39 @@ namespace AuthWithTokenServer
     [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class AuthenticationTokenService
     {
-        /// <summary>
-        ///     A paraméterként megkapott hitelesítési adatoknak
-        ///     megfelelően Authenticáltat egy User-t.
-        ///     A Kapott adatokat JSON objektumként, POST-ban kapja
-        ///     meg a Klienstől
-        /// </summary>
-        /// <param name="credentials">Hitelesítési adatokat tartalmazó objektum</param>
-        /// <returns>
-        ///     Ha a hitelesítési adatok megfelelőek        -> Egy statikus Token-t térít vissza
-        ///     Ha a hitelesítési adatok nem megfelelőek    -> InvalidCredentialException()
-        /// </returns>
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public string Authenticate(Credentials credentials)
+        public AuthenticateResponseDto Authenticate(UserCredentialsViewModel credentialsViewModel)
         {
-            /// Basic authentication végrehajtása
-            if (credentials == null && WebOperationContext.Current != null)
+            using (AuthenticationExampleDbContext context = new AuthenticationExampleDbContext())
             {
-                credentials = new BasicAuth(WebOperationContext.Current.IncomingRequest.Headers["Authorization"]).Credentials;
-            }
-
-            /// Valid Token generálás a Valid User-hez
-            using (var authDBContext = new AuthenticationEntities())
-            {
-                ICredentialsValidator credentialsValidator = new DBCredentialsValidator(authDBContext);
-
-                if (credentialsValidator.IsValid(credentials))
+                UserDto userDto = new UserCredentialsValidator(context).CredentialsIsValid(new UserCredentialsDto
                 {
-                    return new DBTokenBuilder(authDBContext).Build(credentials);
-                }
+                    UserName = credentialsViewModel.UserName,
+                    Password = credentialsViewModel.Password
+                });
 
-                throw new WebFaultException<RequestErrorData>(
-                    new RequestErrorData((int)HttpStatusCode.Forbidden, "Authentikációs hiba", "Nem megfelelőek az authentikációs adatok"),
-                    HttpStatusCode.Unauthorized);
+                if (userDto != null)
+                {
+                    return new AuthenticateResponseDto
+                    {
+                        SecureToken = new TokenBuilder(context).TokenBuild(new LoggedUserDto
+                        {
+                            UserId = userDto.Id,
+                            UserName = userDto.UserName,
+                            Password = credentialsViewModel.Password
+                        })
+                    };
+                }
             }
+
+            throw new WebFaultException<RequestErrorDto>(
+                new RequestErrorDto
+                {
+                    StatusCode = (int)HttpStatusCode.Forbidden,
+                    Reason = "Authentication Error!",
+                    Details = "Username/ password pair is incorrect!"
+                }, HttpStatusCode.Unauthorized);
         }
     }
 }

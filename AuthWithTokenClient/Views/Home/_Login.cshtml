@@ -1,0 +1,41 @@
+﻿@model AuthWithTokenClient.Models.Home.Authentication.CredentialsViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="row" style="padding-top:10px">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                Login details
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        @using (Html.BeginForm("Authenticate", "Home", FormMethod.Post, new { id = "authentication-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username..." })
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(m => m.Password, new { placeholder = "Password...", @class = "form-control", @id = "Password", autocomplete = "new-password" })
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" id="logInBtn" class="btn btn-primary home-btn-custom-style">Log in</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="row secret-token-row">
+                    <div class="col-md-12">
+                        <h5 class="underline-text">Token: </h5>
+                        <span id="secretToken"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,4 @@
-﻿$(document).ready(function () {
-    $('authenticationForm').attr('autocomplete', 'new-password');
-
-    $('#postBasicAuthTestButton').click(function () {
-        document.getElementById('hiddenBasicAuthText').value = "Basic " + btoa(document.getElementById('User').value + ":" + document.getElementById('Password').value);
-    });
-});
+﻿
 
 var getAuthenticateButtonClickResult = function (data) {
     var jsonArrayLength = 0;
@@ -68,3 +62,11 @@ var postBasicAuthenticateButtonClickResult = function (data) {
         document.getElementById('postBasicAuthTextResult').innerHTML = data;
     }
 }
+
+$(document).ready(function () {
+    $('authenticationForm').attr('autocomplete', 'new-password');
+
+    $('#postBasicAuthTestButton').click(function () {
+        document.getElementById('hiddenBasicAuthText').value = "Basic " + btoa(document.getElementById('User').value + ":" + document.getElementById('Password').value);
+    });
+});

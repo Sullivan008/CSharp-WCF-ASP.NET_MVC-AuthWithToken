@@ -1,0 +1,38 @@
+﻿@model AuthWithTokenClient.Models.Home.Test.HeadersViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="row card-row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                POST Basic Authentication Test Details
+            </div>
+            <div class="card-body">
+                <div class="row post-basic-auth-test-details-result-row">
+                    <div class="col-md-12">
+                        <h5 class="underline-text">Response to Test POST:</h5>
+                        <div id="postBasicAuthTestResult"></div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        @using (Html.BeginForm("PostBasicAuthTest", "Home", FormMethod.Post, new { id = "postBasicAuthTest-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                @Html.HiddenFor(m => m.AuthorizationString, new { id = "hiddenBasicAuthText" })
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input type="submit" class="btn btn-primary home-btn-custom-style" value="Basic Authenticaiton" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

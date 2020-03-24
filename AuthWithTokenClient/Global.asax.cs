@@ -16,15 +16,10 @@ namespace AuthWithTokenClient
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        /// <summary>
-        ///     Minden Request küldés előtt lefutó metódus.
-        /// </summary>
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            /// Clickjacking elleni védelem bekapcsolása
             HttpContext.Current.Response.AddHeader("X-Frame-Options", "DENY");
 
-            /// Expires (Lejárati idő) beállítása
             HttpContext.Current.Response.Cache.SetExpires(new DateTime(2000, 1, 1, 1, 0, 0));
         }
     }

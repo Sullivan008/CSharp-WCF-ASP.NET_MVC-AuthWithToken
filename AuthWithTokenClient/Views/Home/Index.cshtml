@@ -1,68 +1,17 @@
-﻿@{
-    ViewBag.Title = "Index Page";
+﻿@model AuthWithTokenClient.Models.Home.HomeViewModel
+
+@{
+    ViewBag.Title = "Home";
 }
 
-@model AuthWithTokenClient.Models.ViewModels.HomeViewModel
+@Html.Partial("_Login", Model.CredentialsViewModel)
 
-<div class="container" align="center">
-    <div class="row">
-        <div class="col">
-            @using (Ajax.BeginForm("Authenticate", "Home", null, new AjaxOptions() { OnSuccess = "getAuthenticateButtonClickResult" }, new { id = "authenticationForm" }))
-            {
-                @Html.AntiForgeryToken()
+@Html.Partial("_TokenTest", Model.HeadersViewModel)
 
-                <div class="form-group">
-                    <div>
-                        @Html.TextBoxFor(m => m.CredentialsViewModel.User, new { placeholder = "Felhasználónév...", @class = "form-input", @id = "User", autocomplete = "new-password" })
-                        <p> </p>
-                        @Html.PasswordFor(m => m.CredentialsViewModel.Password, new { placeholder = "Jelszó...", @class = "form-input", @id = "Password", autocomplete = "new-password" })
-                    </div>
-                    <div class="col-md-offset-2 col-md-10">
-                        <br />
-                        <input type="submit" class="btn btn-info" value="Bejelentkezés" />
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
+@Html.Partial("_BasicAuthTest", Model.HeadersViewModel)
 
-<br />
-<p>Token: <span id="token"></span></p>
-@using (Ajax.BeginForm("GetTokenTest", "Home", null, new AjaxOptions() { OnSuccess = "getTokenButtonClickResult" }, null))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        <div>
-            @Html.HiddenFor(m => m.HeadersViewModel.Token, new { @ID = "hiddenTokenText" })
-        </div>
-        <div class="col-md-offset-2 col-md-10">
-            <br />
-            <input type="submit" class="btn btn-info" value="GET Token Test" />
-        </div>
-    </div>
+@section scripts{
+    @Scripts.Render("~/bundles/Scripts/app/common/serialize/json/form-serialize-to-json")
+    @Scripts.Render("~/bundles/Scripts/app/common/operations/modal/modal-operations")
+    @Scripts.Render("~/bundles/Scripts/app/views/home/index-view")
 }
-
-<p>Test GET-re érkezett válasz: <span id="getTokenTextResult"></span></p>
-
-@using (Ajax.BeginForm("PostBasicAuthTest", "Home", null, new AjaxOptions() { OnSuccess = "postBasicAuthenticateButtonClickResult" }, null))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        <div>
-            @Html.HiddenFor(m => m.HeadersViewModel.Authorization, new { @ID = "hiddenBasicAuthText" })
-        </div>
-        <div class="col-md-offset-2 col-md-10">
-            <br />
-            <input type="submit" id="postBasicAuthTestButton" class="btn btn-info" value="POST Basic Auth Test" />
-        </div>
-    </div>
-}
-<p>Test POST-ra érkezett válasz: <span id="postBasicAuthTextResult"></span></p>
-
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-<script src="~/Scripts/knockout-3.5.0.js"></script>
-<script src="~/Scripts/auth.js"></script>

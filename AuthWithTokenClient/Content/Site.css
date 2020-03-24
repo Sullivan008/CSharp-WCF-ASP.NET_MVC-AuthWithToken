@@ -1,24 +1,62 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.navbar {
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.container {
+    margin-top: 25px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.card-row {
+    margin-top: 25px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.home-btn-custom-style {
+    min-width: 115px;
 }
+
+.secret-token-row {
+    margin-top: 30px;
+}
+
+.get-token-test-details-result-row {
+    margin-top: 25px;
+}
+
+.post-basic-auth-test-details-result-row {
+    margin-top: 25px;
+}
+
+.response-title-span {
+    font-weight: bold;
+}
+
+.underline-text {
+    text-decoration: underline;
+}
+
+/*#region BUTTON STYLES */
+
+.modal-title {
+    color: #a50303;
+}
+
+.modal-body h5 {
+    color: #a50303;
+}
+
+.modal-body div p {
+    color: #a50303;
+}
+
+.close {
+    color: #730000;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #6b0000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+/*#endregion*/
